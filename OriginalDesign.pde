@@ -1,22 +1,41 @@
 float rotateBall= 0;
-float PokeX=60;
-float PokeY=340;
+float ballX=60;
+float ballY=340;
 float rectX=25;
 float rectY=335;
+float stopX=225; //stops movement at x
+PImage background;
 
 void setup()
 {
 size(600,400);
+background = loadImage("http://i52.tinypic.com/mn2ra0.png");
 
 }
 void draw()
 {
- background(125);
- jigglypuff();
+ image(background,0,0,600,400);
+ if(ballX>=stopX)
+  {
+  jigglypuff(); 
+  }
+
   bottomPokeball();
    topPokeball();
   middlePokeball(); //open ball
   
+  while(rotateBall <= (1.65*PI) ) //changing rotation
+ {
+   rotateBall = 6.27686; //1.65*PI ; // PI must rotate near 2
+ }
+ if (ballX>stopX)
+ {
+ 	ballX=stopX;
+ 	ballY=257;
+ 	rectX=190;
+ 	rectY=252;
+ }
+
   
 }
 void jigglypuff()
@@ -63,6 +82,29 @@ curveVertex(508,253);
 
 endShape();
 
+//right foot
+beginShape();
+curveVertex(393,284);
+curveVertex(393,284);
+curveVertex(381,292);
+curveVertex(369,307);
+curveVertex(386,309);
+curveVertex(403,306);
+curveVertex(417,294);
+curveVertex(417,294);
+endShape();
+//left foot
+beginShape();
+curveVertex(485,287);
+curveVertex(485,287);
+curveVertex(494,292);
+curveVertex(509,307);
+curveVertex(487,309);
+curveVertex(475,306);
+curveVertex(459,296);
+curveVertex(459,296);
+endShape();
+
 beginShape(); //right ear
 curveVertex(337,  153);
 curveVertex(409,  146);
@@ -81,6 +123,25 @@ curveVertex(469, 144);
 curveVertex(480, 143);
 endShape();
 
+//inner left ear
+fill(15,4,33);
+beginShape();
+curveVertex(373,174);
+curveVertex(373,174);
+curveVertex(367,139);
+curveVertex(397,153);
+curveVertex(397,153);
+endShape();
+//inner right ear
+beginShape();
+curveVertex(507,173); //starting from right side
+curveVertex(507,173);
+curveVertex(515,127);
+curveVertex(485,147);
+curveVertex(485,147);
+endShape();
+//end of ears
+
 fill(255);
 ellipse(403,210,45,45); //biggest eye right
 ellipse(479,210,45,45); //biggest left eye
@@ -94,6 +155,41 @@ fill(255);
 ellipse(474,200,10,10); //smallest left
 ellipse(401,198,10,10); //smallest right
 
+//jiggly hair
+fill(255,228,225); //same color as body
+arc(436,155,56,56,PI, 2*PI);
+beginShape();
+curveVertex(408,153); //left part of twirl
+curveVertex(408,153);
+curveVertex(405,169);
+curveVertex(413,191);
+curveVertex(424,201);
+curveVertex(438,202);
+curveVertex(438,202);
+endShape();
+
+beginShape();//right part of twirl
+curveVertex(438,202);
+curveVertex(438,202);
+curveVertex(448,198);
+curveVertex(452,185);
+curveVertex(440,176);
+curveVertex(437,189);
+curveVertex(480,180);
+endShape();
+
+
+beginShape(); //top right twirl
+curveVertex(440,176);
+curveVertex(440,176);
+curveVertex(448,174);
+curveVertex(458,166);
+curveVertex(462,161);
+curveVertex(463,158);
+curveVertex(463,158);
+endShape();
+
+//end jiggly hair
 
 
 //mouth
@@ -116,24 +212,22 @@ void bottomPokeball()
 {
   noStroke();
 fill(255);
-arc(PokeX,PokeY,70,70,0,PI); //bottom
+arc(ballX,ballY,70,70,0,PI); //bottom
 
 
 }
 void topPokeball()
 {
   fill(255,0,0);
-  translate(PokeX,PokeY);
+  
+  translate(ballX,ballY);
   rotate(rotateBall);
 arc(0,0,70,70,PI,TWO_PI); //top x=60, y=340
-frameRate(50);
   rotateBall= rotateBall +  (1.999*PI );
-  PokeX++;
-  PokeY=PokeY-0.5; //keeps rotating
-  translate(-PokeX,-PokeY); //stops translation
-  frameRate(-50);
-  
 
+  ballX++;
+  ballY=ballY-0.5; //keeps rotating
+   translate(-ballX,-ballY); //stops translation
 }
 void middlePokeball()
 {
@@ -141,19 +235,10 @@ void middlePokeball()
 rect(rectX,rectY,71,10);
 rectX++; //to move with ball
 rectY=rectY-.5;//middle x=25 y=335
-ellipse(PokeX,PokeY,25,25);
+ellipse(ballX,ballY,25,25);
 fill(255);
 stroke(10);
-ellipse(PokeX,PokeY,17,17);
-ellipse(PokeX,PokeY,11,11);
- rotate(-rotateBall); //cancel rotation
-
-/*if(rotateBall < (1.65*PI) ) //changing rotation
- {
-    rotateBall = 6.27686; //1.65*PI ; // PI must rotate near 2
- }*/
+ellipse(ballX,ballY,17,17);
+ellipse(ballX,ballY,11,11);
 
 }
-
-
-
